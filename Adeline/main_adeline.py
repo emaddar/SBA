@@ -28,7 +28,7 @@ class request_body(BaseModel):
 @app.post("/predict")
 
 def predict(data : request_body):
-    #nouvelle données sur lesquelles on fait  la prédiction
+    # nouvelle données sur lesquelles on fait  la prédiction
     # new_data = [[
     #     data.State ,
     #     data.NAICS  ,
