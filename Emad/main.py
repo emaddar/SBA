@@ -1,61 +1,58 @@
-## uvicorn main:app --reload
-
-import fastapi
-import uvicorn
-from joblib import load
-from typing import Optional
 from fastapi import FastAPI
+
+from typing import Optional
 from pydantic import BaseModel
+import pickle
 import pandas as pd
 
-try:
-    SBA_data = pd.read_csv('/home/apprenant/Documents/archive/SBAnational.csv')
-except:
-    SBA_data = pd.read_csv('C:/Users/emada/Downloads/loan_project (1)/SBAnational.csv')
-    
-loaded_model = load('random_forest_model.joblib')
+pickle_in = open('RFR_Model.pkl', 'rb') 
+clf =pickle.load(pickle_in)
 
-# Creation d'une nouvelle instance FastAPI
+def get_prediction(State, NAICS, ApprovalFY, Term, NoEmp, NewExist, CreateJob, FranchiseCode, UrbanRural, RevLineCr, LowDoc, GrAppv):
+    x = [[State, NAICS, ApprovalFY, Term, NoEmp, NewExist, CreateJob, FranchiseCode, UrbanRural, RevLineCr, LowDoc, GrAppv]]
+    df = pd.DataFrame(x, columns=['State', 'NAICS', 'ApprovalFY', 'Term', 'NoEmp', 'NewExist', 'CreateJob', 'FranchiseCode', 'UrbanRural', 'RevLineCr', 'LowDoc', 'GrAppv'])
+    df = df.astype({'State': 'object', 'NAICS': 'object', 'UrbanRural': 'object', 'RevLineCr': 'object', 'LowDoc': 'object'})
+    y = clf.predict(df)[0]
+    prob = clf.predict_proba(df)[0].tolist()
+    return {'prediction': str(y), 'probability': prob}
+
+
+
+# initiate API
 app = FastAPI()
 
-# Définir une class pour réaliser des réquetes
-class request_body(BaseModel):
-    State : object
-    NAICS : object 
-    ApprovalFY : int
-    Term : int
-    NoEmp : int
-    NewExist : float
-    CreateJob : int
-    FranchiseCode : int
-    UrbanRural : int  
-    RevLineCr : object 
-    LowDoc : object 
-    GrAppv : float
-    Categorie_NAICS : object
 
-# Definition du chemin du point de determination (API)
-@app.post("/predict") #local : http://127.0.0.1:8000/predict
+# define model for post request.
+class ModelParams(BaseModel):
+    param1: object
+    param2: object
+    param3: int
+    param4: int
+    param5: int
+    param6: float
+    param7: int
+    param8: int
+    param9: int
+    param10: object
+    param11: object
+    param12: float
 
-# Définition de la fonction de prédiction
-def predict(data : request_body):
-    #nouvelle données sur lesquelles on fait  la prédiction
-    new_data = [[
-        data.State ,
-        data.NAICS  ,
-        data.ApprovalFY, 
-        data.Term ,
-        data.NoEmp ,
-        data.NewExist ,
-        data.CreateJob ,
-        data.FranchiseCode, 
-        data.UrbanRural   ,
-        data.RevLineCr  ,
-        data.LowDoc  ,
-        data.GrAppv ,
-        data.Categorie_NAICS, 
-                ]]
-    # Prédiction
-    class_idx = loaded_model.predict(new_data)[0]
 
-    return {'class' : SBA_data.target[class_idx]}
+@app.post("/predict")
+def predict(params: ModelParams):
+
+    pred = get_prediction(params.param1, 
+                          params.param2,
+                          params.param3,
+                          params.param4,
+                          params.param5,
+                          params.param6,
+                          params.param7,
+                          params.param8,
+                          params.param9,
+                          params.param10,
+                          params.param11,
+                          params.param12
+                          )
+
+    return pred
