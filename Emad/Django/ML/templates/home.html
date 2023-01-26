@@ -1,0 +1,293 @@
+
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Result</title>
+
+  <script src="https://kit.fontawesome.com/8f51521eb7.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<style>
+  .center {
+    text-align : center;
+    margin-top: 0%;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: rgb(230, 239, 245);
+    padding: 10px; 
+  }
+  .CharBox{
+    text-align : center;
+    width: 400px;
+    height: 260px;
+  }
+  .special-card {
+    {% comment %} /* create a custom class so you 
+       do not run into specificity issues 
+       against bootstraps styles
+       which tends to work better than using !important 
+       (future you will thank you later)*/ {% endcomment %}
+    
+      {% comment %} background-color: rgba(245, 245, 245, 1); {% endcomment %}
+      {% comment %} opacity: .4; {% endcomment %}
+      text-align : left;
+      color : rgb(29, 161, 242);
+    }
+  </style> 
+</head>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Home page</title>
+
+  <script src="https://kit.fontawesome.com/8f51521eb7.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <style>
+    .center {
+      position: absolute;
+      text-align: center;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: rgb(230, 239, 245);
+    }
+  </style>
+</head>
+
+
+
+<body class="center" > -->
+
+
+    {% load static %}
+    
+    
+    <main>
+      
+    
+      <h1 style="color:rgb(44, 44, 90); font-weight: 700;">
+       Ce prêt doit être accordé ou rejetté ? <i class="fa-solid fa-sack-dollar"></i>
+      </h1>
+    
+      <p style="color:rgb(51, 51, 83); font-weight: 700; text-align: justify;">
+        L’enjeux est de prédire si les entreprises seront capables de rembourser leur prêt ou pas.
+      </p>
+    
+      <form action="result">
+        {% csrf_token %}
+        <div class="row g-2">
+    
+          <!-- all_words -->
+            <div class="col-md">
+              <div class="form-floating">
+                <label for="floatingInputGrid">Gross amount of loan approved by bank (GrAppv)</label>
+                <input type="text" class="form-control" value=450000 id="floatingInputGrid" name="GrAppv" required>
+              </div>
+            </div>
+    
+        </div>
+        <p></p>
+
+
+
+
+
+
+        <div class="row g-2">
+
+
+        <!-- limit -->
+        <div class="col-md">
+            <div class="form-floating">
+                <label for="floatingInputGrid">                    
+                Borrower state <br>(State)</label>
+                <input type="text" class="form-control" id="floatingInputGrid" value='CA' name="State" required >
+            </div>
+            </div>
+
+    
+            <!-- limit -->
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">
+                        Industry classification system code <br>(NAICS)</label>
+                    <input type="text" class="form-control" id="floatingInputGrid" value='Arts' name="NAICS" required >
+                </div>
+              </div>
+
+            <!-- Minimum_likes -->
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">Fiscal year of commitment <br>(ApprovalFY)</label>
+                    <input type="number" class="form-control" id="floatingInputGrid" value=1997 name="ApprovalFY" required >
+                </div>
+            </div>
+              
+    
+
+            
+        </div>
+        <p></p>
+            
+
+
+
+
+
+
+
+
+
+
+        
+
+
+        <div class="row g-2">
+
+
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">Loan term in months<br>(Term)</label>
+
+                    <input type="number" class="form-control" id="floatingInputGrid" value=250 name="Term" required >
+                </div>
+            </div>
+
+    
+            <!-- limit -->
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">
+                        Number of business employees <br>(NoEmp)</label>
+                    <input type="number" class="form-control" id="floatingInputGrid" value=1 name="NoEmp" required >
+                </div>
+              </div>
+
+            <!-- Minimum_likes -->
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">1 = Existing business, 2 = New business (NewExist)</label>
+                    <input type="number" class="form-control" id="floatingInputGrid" value=1 name="NewExist" required >
+                </div>
+            </div>
+              
+    
+            
+            
+        </div>
+        <p></p>
+        
+        
+
+
+
+
+
+
+
+
+        
+
+
+
+        <div class="row g-2">
+    
+
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">Number of jobs created <br>(CreateJob)</label>
+
+                    <input type="number" class="form-control" id="floatingInputGrid" value=0 name="CreateJob" required >
+                </div>
+            </div>
+
+
+            <!-- Minimum_likes -->
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">Franchise code, (00000 or 00001) = No franchise (FranchiseCode)</label>
+                    <input type="number" class="form-control" id="floatingInputGrid" value=1 name="FranchiseCode" required >
+                </div>
+            </div>
+              
+    
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">1 = Urban, 2 = rural, 0 = undefined <br>(UrbanRural)</label>
+
+                    <input type="number" class="form-control" id="floatingInputGrid" value=0 name="UrbanRural" required >
+                </div>
+            </div>
+            
+        </div>
+        <p></p>
+
+
+
+
+
+
+
+
+
+        <div class="row g-2">
+    
+
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">Revolving line of credit: Y = Yes, N = No (RevLineCr)</label>
+
+                    <input type="text" class="form-control" id="floatingInputGrid" value="Y" name="RevLineCr" required >
+                </div>
+            </div>
+
+
+            <!-- Minimum_likes -->
+            <div class="col-md">
+                <div class="form-floating">
+                    <label for="floatingInputGrid">LowDoc Loan Program: Y = Yes, N = No (LowDoc)</label>
+                    <input type="text" class="form-control" id="floatingInputGrid" value="N" name="LowDoc" required >
+                </div>
+            </div>
+              
+    
+            
+        </div>
+        <p></p>        
+    
+        <input class="btn btn-primary btn-lg btn-block" type="submit" value='Submit'>
+    
+      </form>
+    
+    
+      {% comment %} <a href="{% url 'home' %}"> <i class="fa-solid fa-angles-left"></i> Back to Home </a>
+     {% endcomment %}
+    
+    </main>
+</body>
+
+</html>
+
+{% endblock content %}
