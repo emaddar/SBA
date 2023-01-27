@@ -1,1 +1,33 @@
-<h1>Results</h1>
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+{% if response == 'P I F' %}
+  <h1 style="color:rgb(44, 44, 90); font-weight: 700;">
+    <i class="fa-solid fa-face-laugh-beam"></i> RESULTS : {{response}} 
+  </h1>
+
+
+  <h1 style="color:rgb(44, 44, 90); font-weight: 700;">
+    <i class="fa-solid fa-dice"></i> Probability : {{proba}} %
+  </h1>
+
+{% else %}
+
+  <h1 style="color:rgb(216, 6, 52); font-weight: 700;">
+    <i class="fa-solid fa-face-angry"></i> RESULTS : {{response}} 
+  </h1>
+
+
+  <h1 style="color:rgb(216, 6, 52); font-weight: 700;">
+    <i class="fa-solid fa-dice"></i> Probability : {{proba}} %
+  </h1>
+
+  {% endif %}
+
+{% endblock content %}

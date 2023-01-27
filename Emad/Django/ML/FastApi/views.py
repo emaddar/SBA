@@ -1,4 +1,8 @@
+# python manage.py runserver 7000
+# https://github.com/jeremy-vangansberg/medical_cost
+
 from django.shortcuts import render
+import json
 
 # Create your views here.
 # from django.http import HttpResponse
@@ -23,7 +27,30 @@ def result(request):
     RevLineCr = request.GET['RevLineCr']                                 #10
     LowDoc = request.GET['LowDoc']  
 
+
+    import requests
+
+    # Define the input parameters
+    data = {
+        "State": State,
+        "NAICS": NAICS,
+        "ApprovalFY": ApprovalFY,
+        "Term": Term,
+        "NoEmp": NoEmp,
+        "NewExist": NewExist,
+        "CreateJob": CreateJob,
+        "FranchiseCode": FranchiseCode,
+        "UrbanRural":  UrbanRural,
+        "RevLineCr": RevLineCr,
+        "LowDoc": LowDoc,
+        "GrAppv": GrAppv
+    }
+
+    # Send the POST request
+    response = requests.post("http://localhost:8000/predict", json=data)
+
     return render(request, 'result.html', {
-                                            'GrAppv':GrAppv,
+                                            'response':response.json()['prediction'],
+                                            'proba':round(response.json()['probability'][1]*100,2),
                                             
     })
