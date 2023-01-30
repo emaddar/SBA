@@ -52,5 +52,6 @@ def result(request):
     return render(request, 'result.html', {
                                             'response':response.json()['prediction'],
                                             'proba':round(response.json()['probability'][1]*100,2),
+                                            'probaNon': round(response.json()['probability'][0]*100,2),
                                             
     })
