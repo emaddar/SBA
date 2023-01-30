@@ -47,11 +47,41 @@ def result(request):
     }
 
     # Send the POST request
-    response = requests.post("http://localhost:8000/predict", json=data)
+    response_RFR = requests.post("http://localhost:8000/predict", json=data)
+    response_XGB = requests.post("http://localhost:8001/predict", json=data)
+    response_logisreg = requests.post("http://localhost:8002/predict", json=data)
+
+
+    if response_RFR.json()['prediction'] == 'P I F':
+        response_RFR_result =  'Acceptance credit'
+    else :
+        response_RFR_result =  'Not acceptance credit'
+
+
+    if response_XGB.json()['prediction']== "1":
+        response_XGB_result = 'Acceptance credit'
+    else : 
+        response_XGB_result = 'Not acceptance credit'
+
+    
+    if response_logisreg.json()['prediction'] == 'P I F':
+        response_logisreg_result =  'Acceptance credit'
+    else :
+        response_logisreg_result =  'Not acceptance credit'
+
 
     return render(request, 'result.html', {
-                                            'response':response.json()['prediction'],
-                                            'proba':round(response.json()['probability'][1]*100,2),
-                                            'probaNon': round(response.json()['probability'][0]*100,2),
+                                            'response_RFR':response_RFR_result,
+                                            'proba_RFR':round(response_RFR.json()['probability'][1]*100,2),
+                                            'probaNon_RFR': round(response_RFR.json()['probability'][0]*100,2),
+
+                                            'response_XGB':response_XGB_result,
+                                            'proba_XGB':round(response_XGB.json()['probability'][1]*100,2),
+                                            'probaNon_XGB': round(response_XGB.json()['probability'][0]*100,2),
                                             
+
+                                            'response_logisreg':response_logisreg_result,
+                                            'proba_logisreg':round(response_logisreg.json()['probability'][1]*100,2),
+                                            'probaNon_logisreg': round(response_logisreg.json()['probability'][0]*100,2),
+
     })

@@ -1,4 +1,4 @@
-## uvicorn main:app --reload
+## uvicorn main:app --port 8001  --reload
 
 from fastapi import FastAPI
 
@@ -7,7 +7,7 @@ from pydantic import BaseModel
 import pickle
 import pandas as pd
 
-pickle_in = open('RFR_Model.pkl', 'rb') 
+pickle_in = open('XGBoost_model.pkl', 'rb') 
 clf =pickle.load(pickle_in)
 
 def get_prediction(State, NAICS, ApprovalFY, Term, NoEmp, NewExist, CreateJob, FranchiseCode, UrbanRural, RevLineCr, LowDoc, GrAppv):

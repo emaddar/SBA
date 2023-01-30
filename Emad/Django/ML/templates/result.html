@@ -7,14 +7,14 @@
 {% block content %}
 
 
-{% if response == 'P I F' %}
+{% comment %} {% if response == 'P I F' %}
   <h1 style="color:rgb(44, 44, 90); font-weight: 700;">
-    <i class="fa-solid fa-face-laugh-beam"></i> RESULTS : {{response}} 
+    <i class="fa-solid fa-face-laugh-beam"></i> RESULTS : {{response}}  
   </h1>
 
 
   <h1 style="color:rgb(44, 44, 90); font-weight: 700;">
-    <i class="fa-solid fa-dice"></i> Probability : {{proba}} %
+    <i class="fa-solid fa-dice"></i> Probability : {{proba}} % 
   </h1>
 
 {% else %}
@@ -28,6 +28,126 @@
     <i class="fa-solid fa-dice"></i> Probability : {{probaNon}} %
   </h1>
 
-  {% endif %}
+  {% endif %} {% endcomment %}
 
+
+
+
+
+
+  <p></p>
+  <h1 style="color:rgb(44, 44, 90); font-weight: 700;">
+     RESULTS
+  </h1>
+  <p></p>
+  
+  {% if response_RFR == 'Acceptance credit' %}
+  <div class="card-deck">
+    <div class="card">
+      <div class="card-header">
+         Random Forest Classifier <p> (F1 Macro Avg : 0.78)</p> 
+      </div>
+  
+      <div class="card-body">
+        <h5 style = "text-align: center" class="card-title special-card">
+          <i class="fa-solid fa-face-laugh-beam"></i> {{response_RFR}}
+        </h5>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Probability : {{proba_RFR}} %</small>
+      </div>
+    </div>
+    {% else %}
+    <div class="card-deck">
+      <div class="card">
+        <div class="card-header">
+           Random Forest Classifier <p> (F1 Macro Avg : 0.78)</p> 
+        </div>
+    
+        <div class="card-body">
+          <h5 style="color:rgb(216, 6, 52); text-align: center" class="card-title special-card">
+            <i class="fa-solid fa-face-angry"></i> {{response_RFR}}
+          </h5>
+        </div>
+        <div class="card-footer">
+          <small style="color:rgb(216, 6, 52)" class="text-muted">Probability : {{probaNon_RFR}} %</small>
+        </div>
+      </div>
+      {% endif %}
+
+
+
+
+
+{% if response_XGB == 'Acceptance credit' %}
+    <div class="card">
+      <div class="card-header">
+         XGBoost <p> (F1 Macro Avg : 0.93)</p> 
+      </div>
+  
+      <div class="card-body">
+        <h5 style = "text-align: center" class="card-title special-card">
+          <i class="fa-solid fa-face-laugh-beam"></i> {{response_XGB}}
+        </h5>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Probability : {{proba_XGB}} %</small>
+      </div>
+    </div>
+    {% else %}
+    <div class="card">
+      <div class="card-header">
+         XGBoost <p> (F1 Macro Avg : 0.93)</p> 
+      </div>
+  
+      <div class="card-body">
+        <h5 style="color:rgb(216, 6, 52); text-align: center"  class="card-title special-card">
+          <i class="fa-solid fa-face-angry"></i> {{response_XGB}}
+        </h5>
+      </div>
+      <div class="card-footer">
+        <small style="color:rgb(216, 6, 52)" class="text-muted">Probability : {{probaNon_XGB}} %</small>
+      </div>
+    </div>
+    {% endif %}
+
+
+
+    {% if response_logisreg == 'Acceptance credit' %}
+    <div class="card">
+      <div class="card-header">
+         Logistic Regression <p> (F1 Macro Avg : 0.65)</p> 
+      </div>
+  
+      <div class="card-body">
+        <h5 style = "text-align: center" class="card-title special-card">
+          <i class="fa-solid fa-face-laugh-beam"></i> {{response_logisreg}}
+        </h5>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Probability : {{proba_logisreg}} %</small>
+      </div>
+    </div>
+    {% else %}
+    <div class="card">
+      <div class="card-header">
+         Logistic Regression <p> (F1 Macro Avg : 0.65)</p> 
+      </div>
+  
+      <div class="card-body">
+        <h5 style="color:rgb(216, 6, 52); text-align: center" class="card-title special-card">
+          <i class="fa-solid fa-face-angry"></i> {{response_logisreg}}
+        </h5>
+      </div>
+      <div class="card-footer">
+        <small style="color:rgb(216, 6, 52)" class="text-muted">Probability : {{probaNon_logisreg}} %</small>
+      </div>
+    </div>
+    {% endif %}
+
+
+
+  </div>
+
+  
 {% endblock content %}
