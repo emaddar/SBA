@@ -47,9 +47,9 @@ def result(request):
     }
 
     # Send the POST request
-    response_RFR = requests.post("http://localhost:8000/predict", json=data)
-    response_XGB = requests.post("http://localhost:8001/predict", json=data)
-    response_logisreg = requests.post("http://localhost:8002/predict", json=data)
+    response_RFR = requests.post("https://log-reg-sba2.onrender.com/predict", json=data)
+    response_XGB = requests.post("https://log-reg-sba2.onrender.com/predict", json=data)
+    response_logisreg = requests.post("https://log-reg-sba2.onrender.com/predict", json=data)
 
 
     if response_RFR.json()['prediction'] == 'P I F':
