@@ -47,7 +47,7 @@ def result(request):
     }
 
     # Send the POST request
-    response_RFR = requests.post("https://log-reg-sba2.onrender.com/predict", json=data)
+    response_RFR = requests.post("https://fastapi-rfr.onrender.com/predict", json=data)
     response_XGB = requests.post("https://log-reg-sba2.onrender.com/predict", json=data)
     response_logisreg = requests.post("https://log-reg-sba2.onrender.com/predict", json=data)
 
