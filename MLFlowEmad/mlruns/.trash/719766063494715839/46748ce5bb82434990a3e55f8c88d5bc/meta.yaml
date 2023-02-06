@@ -1,0 +1,16 @@
+artifact_uri: file:///home/apprenant/Documents/SBA/MLFlowEmad/mlruns/719766063494715839/46748ce5bb82434990a3e55f8c88d5bc/artifacts
+deleted_time: null
+end_time: null
+entry_point_name: ''
+experiment_id: '719766063494715839'
+lifecycle_stage: active
+run_id: 46748ce5bb82434990a3e55f8c88d5bc
+run_name: My Experiment10
+run_uuid: 46748ce5bb82434990a3e55f8c88d5bc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1675691858198
+status: 1
+tags: []
+user_id: apprenant
